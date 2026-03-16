@@ -1,0 +1,34 @@
+# This file stores non-secret configuration for your app.
+# For secret configuration, use a .env file.
+
+client_id = "SHOPIFY_API_KEY_PLACEHOLDER"
+name = "merrachi-try-on"
+handle = "merrachi-try-on"
+application_url = "https://example.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "merrachi.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Scopes needed for your app
+scopes = "write_products,read_products,read_customers"
+
+[auth]
+redirect_urls = [
+  "https://example.com/auth/callback",
+  "https://example.com/auth/shopify/callback",
+  "https://example.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-01"
+
+  [[webhooks.subscriptions]]
+  topics = ["app/uninstalled"]
+  uri = "/webhooks"
+
+[pos]
+embedded = false

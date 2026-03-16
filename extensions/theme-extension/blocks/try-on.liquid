@@ -1,0 +1,75 @@
+{% schema %}
+{
+  "name": "Virtual Try On Button",
+  "target": "section",
+  "stylesheet": "try-on.css",
+  "javascript": "try-on.js",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Try On"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="merrachi-try-on-container">
+  <button 
+    id="merrachi-try-on-btn" 
+    class="btn button" 
+    style="background-color: {{ block.settings.button_color }}; color: {{ block.settings.text_color }};"
+    data-customer-id="{{ customer.id }}"
+    data-product-id="{{ product.id }}"
+    data-product-image="{{ product.featured_image | img_url: 'master' }}"
+  >
+    {{ block.settings.button_text }}
+  </button>
+</div>
+
+<!-- Modal Structure -->
+<div id="merrachi-try-on-modal" class="merrachi-modal" style="display: none;">
+  <div class="merrachi-modal-content">
+    <span class="merrachi-close">&times;</span>
+    <h2>Virtual Try On</h2>
+    
+    <div id="merrachi-step-upload" class="merrachi-step">
+      <p>Upload your photos to see how this looks on you!</p>
+      
+      <div class="merrachi-upload-group">
+        <label>Close-up Photo (Face)</label>
+        <input type="file" id="merrachi-photo-closeup" accept="image/*">
+      </div>
+      
+      <div class="merrachi-upload-group">
+        <label>Full Body Photo</label>
+        <input type="file" id="merrachi-photo-fullbody" accept="image/*">
+      </div>
+
+      <button id="merrachi-generate-btn" class="btn button">Generate Try On</button>
+    </div>
+
+    <div id="merrachi-step-loading" class="merrachi-step" style="display: none;">
+      <div class="merrachi-loader"></div>
+      <p>Generating your look... This may take a few seconds.</p>
+    </div>
+
+    <div id="merrachi-step-result" class="merrachi-step" style="display: none;">
+      <img id="merrachi-result-image" src="" alt="Try On Result" style="max-width: 100%;">
+      <button id="merrachi-reset-btn" class="btn button">Try Again</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+api_version = "2024-01"
+
+[[extensions]]
+type = "theme_app_extension"
+name = "Virtual Try On"
+handle = "virtual-try-on"
+
+  [[extensions.targeting]]
+  target = "section.product.block"

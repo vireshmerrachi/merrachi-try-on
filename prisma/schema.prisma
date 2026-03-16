@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id          String    @id
+  shop        String
+  state       String
+  isOnline    Boolean   @default(false)
+  scope       String?
+  expires     DateTime?
+  accessToken String
+  userId      BigInt?
+}
+
+model UserPhoto {
+  id          String   @id @default(uuid())
+  customerId  String   // Shopify Customer ID (GID)
+  type        String   // "closeup" or "fullbody"
+  url         String   // URL from Supabase Storage
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([customerId])
+}
+
+model TryOnResult {
+  id          String   @id @default(uuid())
+  customerId  String?  // Optional, user might not be logged in
+  productId   String   // Shopify Product ID
+  inputPhotoId String? // Reference to UserPhoto
+  resultUrl   String   // URL from Supabase Storage (or AI service)
+  createdAt   DateTime @default(now())
+}
